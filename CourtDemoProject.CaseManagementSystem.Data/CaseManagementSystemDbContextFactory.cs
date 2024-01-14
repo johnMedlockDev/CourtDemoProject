@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace CourtDemoProject.CaseManagementSystem.Data;
@@ -7,9 +8,9 @@ public class CaseManagementSystemDbContextFactory : IDesignTimeDbContextFactory<
 {
     public CaseManagementSystemDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<CaseManagementSystemDbContext>();
-        var connectionString = args.Length > 0 ? args[1] : "";
+        var connectionString = args.Length > 1 && args[0] == "--connection-string" ? args[1] : "";
 
+        var optionsBuilder = new DbContextOptionsBuilder<CaseManagementSystemDbContext>();
         _ = optionsBuilder.UseSqlServer(connectionString);
 
         return new CaseManagementSystemDbContext(optionsBuilder.Options);
