@@ -25,4 +25,8 @@
     <ProjectReference Include="..\CourtDemoProject.CaseManagementSystem.Data\CourtDemoProject.CaseManagementSystem.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

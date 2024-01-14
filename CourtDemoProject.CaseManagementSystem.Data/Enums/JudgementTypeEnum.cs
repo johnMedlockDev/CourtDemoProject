@@ -1,5 +1,5 @@
 ﻿namespace CourtDemoProject.CaseManagementSystem.Data.Enums;
-public enum JudgementType
+public enum JudgementTypeEnum
 {
     Fine,
     Time

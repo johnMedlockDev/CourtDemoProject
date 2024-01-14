@@ -1,4 +1,5 @@
 ﻿
+using CourtDemoProject.CaseManagementSystem.Data.Configurations;
 using CourtDemoProject.CaseManagementSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,4 +11,12 @@ public class CaseManagementSystemDbContext(DbContextOptions<CaseManagementSystem
     public DbSet<CaseDetailEntity> CaseDetails { get; set; }
     public DbSet<CaseParticipantEntity> CaseParticipants { get; set; }
     public DbSet<ChargeEntity> Charges { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        CaseConfiguration.Configure(modelBuilder);
+        CaseDetailConfiguration.Configure(modelBuilder);
+        CaseParticipantConfiguration.Configure(modelBuilder);
+        ChargeConfiguration.Configure(modelBuilder);
+    }
 }
