@@ -9,6 +9,7 @@ public static class CaseConfiguration
         _ = modelBuilder.Entity<CaseEntity>(entity =>
         {
             _ = entity.HasKey(e => e.CaseId);
+            _ = entity.Property(e => e.CaseId).HasMaxLength(50);
             _ = entity.Property(e => e.CourtName).HasMaxLength(50);
         });
     }
