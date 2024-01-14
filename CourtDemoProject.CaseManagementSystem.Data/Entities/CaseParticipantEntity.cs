@@ -1,4 +1,5 @@
-﻿using CourtDemoProject.CaseManagementSystem.Data.Enums;
+﻿using CourtDemoProject.CaseManagementSystem.Data.Dtos;
+using CourtDemoProject.CaseManagementSystem.Data.Enums;
 
 namespace CourtDemoProject.CaseManagementSystem.Data.Entities;
 
@@ -9,5 +10,8 @@ public class CaseParticipantEntity
     public string CaseParticipantFirstName { get; set; } = null!;
     public string CaseParticipantMiddleName { get; set; } = String.Empty;
     public string CaseParticipantLastName { get; set; } = null!;
-
+    public CaseParticipantDto ToDto()
+    {
+        return new CaseParticipantDto(CaseParticipantEntityId, CaseParticipantType, CaseParticipantFirstName, CaseParticipantMiddleName, CaseParticipantLastName);
+    }
 }
