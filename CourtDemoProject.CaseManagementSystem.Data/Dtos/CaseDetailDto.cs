@@ -1,2 +1,2 @@
 ﻿namespace CourtDemoProject.CaseManagementSystem.Data.Dtos;
-public record CaseDetailDto();
+public record CaseDetailDto(Guid CaseDetailId, DateTime CaseDetailEntryDateTime, string Description, string DocketDetail, Uri? DocumentUri);

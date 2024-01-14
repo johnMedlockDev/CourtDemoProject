@@ -1,2 +1,4 @@
-﻿namespace CourtDemoProject.CaseManagementSystem.Data.Dtos;
-public record CaseParticipantDto();
+﻿using CourtDemoProject.CaseManagementSystem.Data.Enums;
+
+namespace CourtDemoProject.CaseManagementSystem.Data.Dtos;
+public record CaseParticipantDto(Guid CaseParticipantEntityId, CaseParticipantTypeEnum CaseParticipantType, string CaseParticipantFirstName, string CaseParticipantLastName, string CaseParticipantMiddleName);
