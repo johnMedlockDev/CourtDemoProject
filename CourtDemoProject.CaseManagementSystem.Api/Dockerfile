@@ -33,4 +33,7 @@ RUN dotnet publish "./CourtDemoProject.CaseManagementSystem.Api.csproj" -c $BUIL
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CourtDemoProject.CaseManagementSystem.Api.dll"]
+# Copy a script to run migrations and then start the app
+COPY ./entrypoint.sh .
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
