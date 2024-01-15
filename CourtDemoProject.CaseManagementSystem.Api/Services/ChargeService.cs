@@ -11,14 +11,14 @@ public class ChargeService(CaseManagementSystemDbContext context)
         return await context.Charges.Select(e => e.ToDto()).ToListAsync();
     }
 
-    public async Task<ChargeDto?> GetChargeEntityAsync(Guid id)
+    public async Task<ChargeDto?> GetChargeAsync(Guid id)
     {
         var charge = await context.Charges.FindAsync(id);
 
         return charge?.ToDto();
     }
 
-    public async Task<ChargeDto> AddChargeEntityAsync(ChargeDto chargeDto)
+    public async Task<ChargeDto> AddChargeAsync(ChargeDto chargeDto)
     {
         var entity = chargeDto.ToEntity();
 
@@ -28,7 +28,7 @@ public class ChargeService(CaseManagementSystemDbContext context)
         return entity.ToDto();
     }
 
-    public async Task<bool> UpdateChargeEntityAsync(ChargeDto chargeDto)
+    public async Task<bool> UpdateChargeAsync(ChargeDto chargeDto)
     {
         var entity = await context.Charges.FindAsync(chargeDto.ChargeId);
         if (entity == null)
@@ -49,7 +49,7 @@ public class ChargeService(CaseManagementSystemDbContext context)
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ChargeEntityExists(entity.ChargeId))
+            if (!ChargeExists(entity.ChargeId))
             {
                 return false;
             }
@@ -58,7 +58,7 @@ public class ChargeService(CaseManagementSystemDbContext context)
         }
     }
 
-    public async Task<bool> DeleteChargeEntityAsync(Guid id)
+    public async Task<bool> DeleteChargeAsync(Guid id)
     {
         var entity = await context.Charges.FindAsync(id);
 
@@ -73,7 +73,7 @@ public class ChargeService(CaseManagementSystemDbContext context)
         return true;
     }
 
-    private bool ChargeEntityExists(Guid id)
+    private bool ChargeExists(Guid id)
     {
         return context.Charges.Any(e => e.ChargeId == id);
     }

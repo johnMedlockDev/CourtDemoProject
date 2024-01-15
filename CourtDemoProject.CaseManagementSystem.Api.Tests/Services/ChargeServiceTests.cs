@@ -43,7 +43,7 @@ public class ChargeServiceTests
     }
 
     [TestMethod]
-    public async Task AddChargeEntityAsync_ShouldAddCharge()
+    public async Task AddChargeAsync_ShouldAddCharge()
     {
         var chargeDto = new ChargeDto(
             Guid.NewGuid(),
@@ -54,14 +54,14 @@ public class ChargeServiceTests
             300,
             30);
 
-        var result = await _service.AddChargeEntityAsync(chargeDto);
+        var result = await _service.AddChargeAsync(chargeDto);
 
         _ = result.ChargeName.Should().Be(chargeDto.ChargeName);
         _ = _context.Charges.Count().Should().Be(3);
     }
 
     [TestMethod]
-    public async Task UpdateChargeEntityAsync_ShouldReturnTrue_WhenUpdateIsSuccessful()
+    public async Task UpdateChargeAsync_ShouldReturnTrue_WhenUpdateIsSuccessful()
     {
         var chargeId = Guid.NewGuid();
         var chargeEntity = new ChargeEntity { ChargeId = Guid.NewGuid(), ChargeName = "Charge2", ChargeCode = "C003", ChargeType = ChargeTypeEnum.Civil, JudgementType = JudgementTypeEnum.Fine, FineAmount = 500, SentenceLengthIndays = 0 };
@@ -70,7 +70,7 @@ public class ChargeServiceTests
 
         var chargeDto = new ChargeDto(chargeEntity.ChargeId, "UpdatedCharge4", "Charge3", ChargeTypeEnum.Civil, JudgementTypeEnum.Fine, 500, 0);
 
-        var result = await _service.UpdateChargeEntityAsync(chargeDto);
+        var result = await _service.UpdateChargeAsync(chargeDto);
 
         _ = result.Should().BeTrue();
         var updatedEntity = await _context.Charges.FindAsync(chargeId);
@@ -83,7 +83,7 @@ public class ChargeServiceTests
     }
 
     [TestMethod]
-    public async Task DeleteChargeEntityAsync_ShouldReturnTrue_WhenDeleteIsSuccessful()
+    public async Task DeleteChargeAsync_ShouldReturnTrue_WhenDeleteIsSuccessful()
     {
         // First, add a charge to delete
         var chargeEntity = new ChargeEntity { ChargeId = Guid.NewGuid(), ChargeCode = "C003", ChargeName = "Charge5", FineAmount = 500, ChargeType = ChargeTypeEnum.Civil, JudgementType = JudgementTypeEnum.Time, SentenceLengthIndays = 0 };
@@ -91,7 +91,7 @@ public class ChargeServiceTests
         _ = await _context.SaveChangesAsync();
 
         // Delete the charge
-        var result = await _service.DeleteChargeEntityAsync(chargeEntity.ChargeId);
+        var result = await _service.DeleteChargeAsync(chargeEntity.ChargeId);
 
         _ = result.Should().BeTrue();
         _ = _context.Charges.Any(c => c.ChargeId == chargeEntity.ChargeId).Should().BeFalse();

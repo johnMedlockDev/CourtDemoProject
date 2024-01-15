@@ -12,13 +12,13 @@ public class CaseParticipantService(CaseManagementSystemDbContext context)
                              .ToListAsync();
     }
 
-    public async Task<CaseParticipantDto?> GetCaseParticipantEntityAsync(Guid id)
+    public async Task<CaseParticipantDto?> GetCaseParticipantAsync(Guid id)
     {
         var caseParticipant = await context.CaseParticipants.FindAsync(id);
         return caseParticipant?.ToDto();
     }
 
-    public async Task<CaseParticipantDto> AddCaseParticipantEntityAsync(CaseParticipantDto caseParticipantDto)
+    public async Task<CaseParticipantDto> AddCaseParticipantAsync(CaseParticipantDto caseParticipantDto)
     {
         var entity = caseParticipantDto.ToEntity();
         _ = context.CaseParticipants.Add(entity);
@@ -26,7 +26,7 @@ public class CaseParticipantService(CaseManagementSystemDbContext context)
         return caseParticipantDto;
     }
 
-    public async Task<bool> UpdateCaseParticipantEntityAsync(CaseParticipantDto caseParticipantDto)
+    public async Task<bool> UpdateCaseParticipantAsync(CaseParticipantDto caseParticipantDto)
     {
         var entity = await context.CaseParticipants.FindAsync(caseParticipantDto.CaseParticipantEntityId);
         if (entity == null)
@@ -47,7 +47,7 @@ public class CaseParticipantService(CaseManagementSystemDbContext context)
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CaseParticipantEntityExists(entity.CaseParticipantEntityId))
+            if (!CaseParticipantExists(entity.CaseParticipantEntityId))
             {
                 return false;
             }
@@ -58,7 +58,7 @@ public class CaseParticipantService(CaseManagementSystemDbContext context)
         }
     }
 
-    public async Task<bool> DeleteCaseParticipantEntityAsync(Guid id)
+    public async Task<bool> DeleteCaseParticipantAsync(Guid id)
     {
         var entity = await context.CaseParticipants.FindAsync(id);
         if (entity == null)
@@ -71,7 +71,7 @@ public class CaseParticipantService(CaseManagementSystemDbContext context)
         return true;
     }
 
-    private bool CaseParticipantEntityExists(Guid id)
+    private bool CaseParticipantExists(Guid id)
     {
         return context.CaseParticipants.Any(e => e.CaseParticipantEntityId == id);
     }

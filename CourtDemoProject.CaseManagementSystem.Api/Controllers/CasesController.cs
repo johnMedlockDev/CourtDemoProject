@@ -21,7 +21,7 @@ public class CasesController(CaseService caseService) : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<CaseDto>> GetCaseEntity(string id)
     {
-        var caseDto = await caseService.GetCaseEntityAsync(id);
+        var caseDto = await caseService.GetCaseAsync(id);
         return caseDto == null ? (ActionResult<CaseDto>) NotFound() : (ActionResult<CaseDto>) Ok(caseDto);
     }
 
@@ -34,7 +34,7 @@ public class CasesController(CaseService caseService) : ControllerBase
             return BadRequest();
         }
 
-        var result = await caseService.UpdateCaseEntityAsync(caseDto);
+        var result = await caseService.UpdateCaseAsync(caseDto);
         return !result ? NotFound() : NoContent();
     }
 
@@ -42,7 +42,7 @@ public class CasesController(CaseService caseService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CaseDto>> PostCaseEntity(CaseDto caseDto)
     {
-        var createdDto = await caseService.AddCaseEntityAsync(caseDto);
+        var createdDto = await caseService.AddCaseAsync(caseDto);
         return CreatedAtAction(nameof(GetCaseEntity), new { id = createdDto.CaseId }, createdDto);
     }
 
@@ -50,7 +50,7 @@ public class CasesController(CaseService caseService) : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCaseEntity(string id)
     {
-        var result = await caseService.DeleteCaseEntityAsync(id);
+        var result = await caseService.DeleteCaseAsync(id);
         return !result ? NotFound() : NoContent();
     }
 }

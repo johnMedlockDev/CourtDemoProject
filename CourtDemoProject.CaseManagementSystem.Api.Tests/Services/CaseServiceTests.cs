@@ -80,13 +80,13 @@ public class CaseServiceTests
     [TestMethod]
     public async Task GetCaseEntityAsync_ShouldReturnCase_WhenCaseExists()
     {
-        var result = await _service.GetCaseEntityAsync("Case-1");
+        var result = await _service.GetCaseAsync("Case-1");
 
         _ = result.Should().NotBeNull();
         _ = (result?.CaseId.Should().Be("Case-1"));
     }
     [TestMethod]
-    public async Task AddCaseEntityAsync_ShouldAddCase()
+    public async Task AddCaseAsync_ShouldAddCase()
     {
         var newCaseDto = new CaseDto(
              "Case-3",
@@ -102,7 +102,7 @@ public class CaseServiceTests
             CaseStatusEnum.InProgress
         );
 
-        var addedCaseDto = await _service.AddCaseEntityAsync(newCaseDto);
+        var addedCaseDto = await _service.AddCaseAsync(newCaseDto);
 
         _ = addedCaseDto.Should().NotBeNull();
         _ = addedCaseDto.CaseId.Should().Be(newCaseDto.CaseId);
@@ -111,7 +111,7 @@ public class CaseServiceTests
     }
 
     [TestMethod]
-    public async Task UpdateCaseEntityAsync_ShouldReturnTrue_WhenUpdateIsSuccessful()
+    public async Task UpdateCaseAsync_ShouldReturnTrue_WhenUpdateIsSuccessful()
     {
         var updateCaseDto = new CaseDto(
             "Case-2",
@@ -127,7 +127,7 @@ public class CaseServiceTests
             CaseStatusEnum.Closed
         );
 
-        var result = await _service.UpdateCaseEntityAsync(updateCaseDto);
+        var result = await _service.UpdateCaseAsync(updateCaseDto);
 
         _ = result.Should().BeTrue();
         var updatedCase = await _context.Cases.FindAsync("Case-2");
@@ -136,9 +136,9 @@ public class CaseServiceTests
         _ = (updatedCase?.CaseStatus.Should().Be(CaseStatusEnum.Closed));
     }
     [TestMethod]
-    public async Task DeleteCaseEntityAsync_ShouldReturnTrue_WhenDeleteIsSuccessful()
+    public async Task DeleteCaseAsync_ShouldReturnTrue_WhenDeleteIsSuccessful()
     {
-        var result = await _service.DeleteCaseEntityAsync("Case-2");
+        var result = await _service.DeleteCaseAsync("Case-2");
 
         _ = result.Should().BeTrue();
         var caseEntity = await _context.Cases.FindAsync("Case-2");

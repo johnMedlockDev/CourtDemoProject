@@ -44,10 +44,10 @@ public class CaseParticipantServiceTests
     }
 
     [TestMethod]
-    public async Task GetCaseParticipantEntityAsync_ShouldReturnCorrectCaseParticipant_WhenIdExists()
+    public async Task GetCaseParticipantAsync_ShouldReturnCorrectCaseParticipant_WhenIdExists()
     {
         var existingId = _context.CaseParticipants.First().CaseParticipantEntityId;
-        var result = await _service.GetCaseParticipantEntityAsync(existingId);
+        var result = await _service.GetCaseParticipantAsync(existingId);
 
         _ = result.Should().NotBeNull();
         _ = (result?.CaseParticipantEntityId.Should().Be(existingId));
@@ -55,7 +55,7 @@ public class CaseParticipantServiceTests
     }
 
     [TestMethod]
-    public async Task AddCaseParticipantEntityAsync_ShouldAddCaseParticipant()
+    public async Task AddCaseParticipantAsync_ShouldAddCaseParticipant()
     {
         var newCaseParticipantDto = new CaseParticipantDto(
             Guid.NewGuid(),
@@ -65,14 +65,14 @@ public class CaseParticipantServiceTests
             "NewLastName"
         );
 
-        var result = await _service.AddCaseParticipantEntityAsync(newCaseParticipantDto);
+        var result = await _service.AddCaseParticipantAsync(newCaseParticipantDto);
 
         _ = result.Should().NotBeNull();
         _ = result.CaseParticipantFirstName.Should().Be("NewFirstName");
         _ = _context.CaseParticipants.Count().Should().Be(4);
     }
     [TestMethod]
-    public async Task UpdateCaseParticipantEntityAsync_ShouldUpdateCaseParticipant_WhenIdExists()
+    public async Task UpdateCaseParticipantAsync_ShouldUpdateCaseParticipant_WhenIdExists()
     {
         var existingCaseParticipant = _context.CaseParticipants.First();
         var updateDto = new CaseParticipantDto(
@@ -83,18 +83,18 @@ public class CaseParticipantServiceTests
             existingCaseParticipant.CaseParticipantLastName
         );
 
-        var result = await _service.UpdateCaseParticipantEntityAsync(updateDto);
+        var result = await _service.UpdateCaseParticipantAsync(updateDto);
 
         _ = result.Should().BeTrue();
         var updatedEntity = await _context.CaseParticipants.FindAsync(existingCaseParticipant.CaseParticipantEntityId);
         _ = (updatedEntity?.CaseParticipantFirstName.Should().Be("UpdatedFirstName"));
     }
     [TestMethod]
-    public async Task DeleteCaseParticipantEntityAsync_ShouldDeleteCaseParticipant_WhenIdExists()
+    public async Task DeleteCaseParticipantAsync_ShouldDeleteCaseParticipant_WhenIdExists()
     {
         var existingId = _context.CaseParticipants.First().CaseParticipantEntityId;
 
-        var result = await _service.DeleteCaseParticipantEntityAsync(existingId);
+        var result = await _service.DeleteCaseParticipantAsync(existingId);
 
         _ = result.Should().BeTrue();
         _ = _context.CaseParticipants.Any(cp => cp.CaseParticipantEntityId == existingId).Should().BeFalse();

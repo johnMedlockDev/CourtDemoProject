@@ -18,7 +18,7 @@ public class CaseParticipantsController(CaseParticipantService caseParticipantSe
     [HttpGet("{id}")]
     public async Task<ActionResult<CaseParticipantDto>> GetCaseParticipantEntity(Guid id)
     {
-        var caseParticipantDto = await caseParticipantService.GetCaseParticipantEntityAsync(id);
+        var caseParticipantDto = await caseParticipantService.GetCaseParticipantAsync(id);
         return caseParticipantDto == null ? (ActionResult<CaseParticipantDto>) NotFound() : (ActionResult<CaseParticipantDto>) Ok(caseParticipantDto);
     }
 
@@ -30,21 +30,21 @@ public class CaseParticipantsController(CaseParticipantService caseParticipantSe
             return BadRequest();
         }
 
-        var result = await caseParticipantService.UpdateCaseParticipantEntityAsync(caseParticipantDto);
+        var result = await caseParticipantService.UpdateCaseParticipantAsync(caseParticipantDto);
         return !result ? NotFound() : NoContent();
     }
 
     [HttpPost]
     public async Task<ActionResult<CaseParticipantDto>> PostCaseParticipantEntity(CaseParticipantDto caseParticipantDto)
     {
-        var createdDto = await caseParticipantService.AddCaseParticipantEntityAsync(caseParticipantDto);
+        var createdDto = await caseParticipantService.AddCaseParticipantAsync(caseParticipantDto);
         return CreatedAtAction(nameof(GetCaseParticipantEntity), new { id = createdDto.CaseParticipantEntityId }, createdDto);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCaseParticipantEntity(Guid id)
     {
-        var result = await caseParticipantService.DeleteCaseParticipantEntityAsync(id);
+        var result = await caseParticipantService.DeleteCaseParticipantAsync(id);
         return !result ? NotFound() : NoContent();
     }
 }

@@ -11,13 +11,13 @@ public class CaseService(CaseManagementSystemDbContext context)
         return await context.Cases.Select(e => e.ToDto()).ToListAsync();
     }
 
-    public async Task<CaseDto?> GetCaseEntityAsync(string id)
+    public async Task<CaseDto?> GetCaseAsync(string id)
     {
         var caseEntity = await context.Cases.FindAsync(id);
         return caseEntity?.ToDto();
     }
 
-    public async Task<CaseDto> AddCaseEntityAsync(CaseDto caseDto)
+    public async Task<CaseDto> AddCaseAsync(CaseDto caseDto)
     {
         var entity = caseDto.ToEntity();
 
@@ -27,7 +27,7 @@ public class CaseService(CaseManagementSystemDbContext context)
         return caseDto;
     }
 
-    public async Task<bool> UpdateCaseEntityAsync(CaseDto caseDto)
+    public async Task<bool> UpdateCaseAsync(CaseDto caseDto)
     {
         var entity = await context.Cases.FindAsync(caseDto.CaseId);
         if (entity == null)
@@ -55,7 +55,7 @@ public class CaseService(CaseManagementSystemDbContext context)
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CaseEntityExists(entity.CaseId))
+            if (!CaseExists(entity.CaseId))
             {
                 return false;
             }
@@ -66,7 +66,7 @@ public class CaseService(CaseManagementSystemDbContext context)
         }
     }
 
-    public async Task<bool> DeleteCaseEntityAsync(string id)
+    public async Task<bool> DeleteCaseAsync(string id)
     {
         var caseEntity = await context.Cases.FindAsync(id);
         if (caseEntity == null)
@@ -79,7 +79,7 @@ public class CaseService(CaseManagementSystemDbContext context)
         return true;
     }
 
-    private bool CaseEntityExists(string id)
+    private bool CaseExists(string id)
     {
         return context.Cases.Any(e => e.CaseId == id);
     }
