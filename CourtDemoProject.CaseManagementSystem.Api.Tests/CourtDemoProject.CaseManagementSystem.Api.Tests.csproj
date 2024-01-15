@@ -20,4 +20,8 @@
     <ProjectReference Include="..\CourtDemoProject.CaseManagementSystem.Api\CourtDemoProject.CaseManagementSystem.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
