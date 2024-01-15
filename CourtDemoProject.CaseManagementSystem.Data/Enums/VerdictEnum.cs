@@ -3,5 +3,6 @@
 public enum VerdictEnum
 {
     Guilty,
-    NotGuilty
+    NotGuilty,
+    InProgress
 }

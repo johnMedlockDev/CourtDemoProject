@@ -19,11 +19,7 @@ public class CaseParticipantsController(CaseParticipantService caseParticipantSe
     public async Task<ActionResult<CaseParticipantDto>> GetCaseParticipantEntity(Guid id)
     {
         var caseParticipantDto = await caseParticipantService.GetCaseParticipantEntityAsync(id);
-        if (caseParticipantDto == null)
-        {
-            return NotFound();
-        }
-        return Ok(caseParticipantDto);
+        return caseParticipantDto == null ? (ActionResult<CaseParticipantDto>) NotFound() : (ActionResult<CaseParticipantDto>) Ok(caseParticipantDto);
     }
 
     [HttpPut("{id}")]
@@ -35,11 +31,7 @@ public class CaseParticipantsController(CaseParticipantService caseParticipantSe
         }
 
         var result = await caseParticipantService.UpdateCaseParticipantEntityAsync(caseParticipantDto);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 
     [HttpPost]
@@ -53,10 +45,6 @@ public class CaseParticipantsController(CaseParticipantService caseParticipantSe
     public async Task<IActionResult> DeleteCaseParticipantEntity(Guid id)
     {
         var result = await caseParticipantService.DeleteCaseParticipantEntityAsync(id);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 }

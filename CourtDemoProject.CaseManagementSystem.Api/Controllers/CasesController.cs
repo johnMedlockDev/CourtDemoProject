@@ -22,11 +22,7 @@ public class CasesController(CaseService caseService) : ControllerBase
     public async Task<ActionResult<CaseDto>> GetCaseEntity(string id)
     {
         var caseDto = await caseService.GetCaseEntityAsync(id);
-        if (caseDto == null)
-        {
-            return NotFound();
-        }
-        return Ok(caseDto);
+        return caseDto == null ? (ActionResult<CaseDto>) NotFound() : (ActionResult<CaseDto>) Ok(caseDto);
     }
 
     // PUT: api/CaseEntities/5
@@ -39,11 +35,7 @@ public class CasesController(CaseService caseService) : ControllerBase
         }
 
         var result = await caseService.UpdateCaseEntityAsync(caseDto);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 
     // POST: api/CaseEntities
@@ -59,11 +51,6 @@ public class CasesController(CaseService caseService) : ControllerBase
     public async Task<IActionResult> DeleteCaseEntity(string id)
     {
         var result = await caseService.DeleteCaseEntityAsync(id);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
-
 }

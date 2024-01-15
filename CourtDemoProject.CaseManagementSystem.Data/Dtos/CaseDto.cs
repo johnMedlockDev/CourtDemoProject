@@ -2,7 +2,7 @@
 using CourtDemoProject.CaseManagementSystem.Data.Enums;
 
 namespace CourtDemoProject.CaseManagementSystem.Data.Dtos;
-public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, ICollection<CaseParticipantDto> CaseParticipants, ICollection<ChargeDto> Charges, DateOnly DateOfOffense, ICollection<CaseDetailDto> CaseDetails, VerdictEnum Verdict, PleadEnum Plead, ICollection<DateTime> CourtDates, CaseStatusEnum CaseStatus)
+public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, List<CaseParticipantDto> CaseParticipants, List<ChargeDto> Charges, DateOnly DateOfOffense, List<CaseDetailDto> CaseDetails, VerdictEnum Verdict, PleadEnum Plead, List<DateTime> CourtDates, CaseStatusEnum CaseStatus)
 {
     public CaseEntity ToEntity()
     {
@@ -10,7 +10,7 @@ public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, IC
         return new CaseEntity { CaseId = CaseId, CaseType = CaseType, CourtName = CourtName, CaseStatus = CaseStatus, Verdict = Verdict, Plead = Plead, CourtDates = CourtDates, DateOfOffense = DateOfOffense, CaseParticipants = ConvertCaseParticipantDtoToEntities, CaseDetails = ConvertCaseDetailDtoToEntities, Charges = ConvertChargeDtoToEntities };
     }
 
-    private ICollection<CaseParticipantEntity> ConvertCaseParticipantDtoToEntities
+    private List<CaseParticipantEntity> ConvertCaseParticipantDtoToEntities
     {
         get
         {
@@ -25,7 +25,7 @@ public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, IC
         }
     }
 
-    private ICollection<CaseDetailEntity> ConvertCaseDetailDtoToEntities
+    private List<CaseDetailEntity> ConvertCaseDetailDtoToEntities
     {
         get
         {
@@ -41,7 +41,7 @@ public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, IC
         }
     }
 
-    private ICollection<ChargeEntity> ConvertChargeDtoToEntities => Charges.Select(x => new ChargeEntity
+    private List<ChargeEntity> ConvertChargeDtoToEntities => Charges.Select(x => new ChargeEntity
     {
         ChargeId = x.ChargeId,
         ChargeType = x.ChargeType,

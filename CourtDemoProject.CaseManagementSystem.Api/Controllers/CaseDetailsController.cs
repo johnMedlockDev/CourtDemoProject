@@ -18,11 +18,7 @@ public class CaseDetailsController(CaseDetailService caseDetailService) : Contro
     public async Task<ActionResult<CaseDetailDto>> GetCaseDetail(Guid id)
     {
         var caseDetailDto = await caseDetailService.GetCaseDetailAsync(id);
-        if (caseDetailDto == null)
-        {
-            return NotFound();
-        }
-        return caseDetailDto;
+        return caseDetailDto == null ? (ActionResult<CaseDetailDto>) NotFound() : (ActionResult<CaseDetailDto>) caseDetailDto;
     }
 
     [HttpPost]
@@ -42,11 +38,7 @@ public class CaseDetailsController(CaseDetailService caseDetailService) : Contro
 
         var result = await caseDetailService.UpdateCaseDetailAsync(caseDetailDto);
 
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 
     [HttpDelete("{id}")]

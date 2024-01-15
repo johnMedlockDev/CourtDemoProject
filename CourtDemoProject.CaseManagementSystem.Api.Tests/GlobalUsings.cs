@@ -1,1 +1,10 @@
+global using System;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using CourtDemoProject.CaseManagementSystem.Data;
+global using CourtDemoProject.CaseManagementSystem.Data.Dtos;
+global using CourtDemoProject.CaseManagementSystem.Data.Entities;
+global using CourtDemoProject.CaseManagementSystem.Data.Enums;
+global using FluentAssertions;
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;

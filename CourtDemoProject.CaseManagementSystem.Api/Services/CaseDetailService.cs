@@ -22,35 +22,48 @@ public class CaseDetailService(CaseManagementSystemDbContext context)
     public async Task<CaseDetailDto> AddCaseDetailAsync(CaseDetailDto caseDetailDto)
     {
         var caseDetail = caseDetailDto.ToEntity();
-        context.CaseDetails.Add(caseDetail);
-        await context.SaveChangesAsync();
+        _ = context.CaseDetails.Add(caseDetail);
+        _ = await context.SaveChangesAsync();
         return caseDetail.ToDto();
     }
 
     public async Task<bool> UpdateCaseDetailAsync(CaseDetailDto caseDetailDto)
     {
-        var entity = caseDetailDto.ToEntity();
-        context.Entry(entity).State = EntityState.Modified;
+        var entity = await context.CaseDetails.FindAsync(caseDetailDto.CaseDetailId);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        // Update properties
+        entity.CaseDetailEntryDateTime = caseDetailDto.CaseDetailEntryDateTime;
+        entity.Description = caseDetailDto.Description;
+        entity.DocketDetail = caseDetailDto.DocketDetail;
+        entity.DocumentUri = caseDetailDto.DocumentUri;
+
         try
         {
-            await context.SaveChangesAsync();
+            _ = await context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CaseDetailExists(entity.CaseDetailId)) return false;
-            else throw;
+            if (!CaseDetailExists(entity.CaseDetailId))
+            {
+                return false;
+            }
+            else
+            {
+                throw;
+            }
         }
     }
 
     public async Task DeleteCaseDetailAsync(Guid id)
     {
-        var caseDetail = await context.CaseDetails.FindAsync(id);
-        if (caseDetail == null)
-            throw new InvalidOperationException("Case detail not found");
-
-        context.CaseDetails.Remove(caseDetail);
-        await context.SaveChangesAsync();
+        var caseDetail = await context.CaseDetails.FindAsync(id) ?? throw new InvalidOperationException("Case detail not found");
+        _ = context.CaseDetails.Remove(caseDetail);
+        _ = await context.SaveChangesAsync();
     }
 
     public bool CaseDetailExists(Guid id)

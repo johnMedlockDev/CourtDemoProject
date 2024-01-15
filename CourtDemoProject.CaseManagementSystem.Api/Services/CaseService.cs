@@ -21,35 +21,61 @@ public class CaseService(CaseManagementSystemDbContext context)
     {
         var entity = caseDto.ToEntity();
 
-        context.Cases.Add(entity);
-        await context.SaveChangesAsync();
+        _ = context.Cases.Add(entity);
+        _ = await context.SaveChangesAsync();
 
         return caseDto;
     }
 
     public async Task<bool> UpdateCaseEntityAsync(CaseDto caseDto)
     {
-        var entity = caseDto.ToEntity();
-        context.Entry(entity).State = EntityState.Modified;
+        var entity = await context.Cases.FindAsync(caseDto.CaseId);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        // Update properties
+        entity.CourtName = caseDto.CourtName;
+        entity.CaseType = caseDto.CaseType;
+
+        entity.CaseParticipants = caseDto.CaseParticipants.Select(e => e.ToEntity()).ToList();
+        entity.Charges = caseDto.Charges.Select(e => e.ToEntity()).ToList();
+        entity.DateOfOffense = caseDto.DateOfOffense;
+        entity.CaseDetails = caseDto.CaseDetails.Select(e => e.ToEntity()).ToList();
+        entity.Verdict = caseDto.Verdict;
+        entity.Plead = caseDto.Plead;
+        entity.CourtDates = caseDto.CourtDates;
+        entity.CaseStatus = caseDto.CaseStatus;
+
         try
         {
-            await context.SaveChangesAsync();
+            _ = await context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CaseEntityExists(entity.CaseId)) return false;
-            else throw;
+            if (!CaseEntityExists(entity.CaseId))
+            {
+                return false;
+            }
+            else
+            {
+                throw;
+            }
         }
     }
 
     public async Task<bool> DeleteCaseEntityAsync(string id)
     {
         var caseEntity = await context.Cases.FindAsync(id);
-        if (caseEntity == null) return false;
+        if (caseEntity == null)
+        {
+            return false;
+        }
 
-        context.Cases.Remove(caseEntity);
-        await context.SaveChangesAsync();
+        _ = context.Cases.Remove(caseEntity);
+        _ = await context.SaveChangesAsync();
         return true;
     }
 

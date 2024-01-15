@@ -19,11 +19,7 @@ public class ChargesController(ChargeService chargeService) : ControllerBase
     public async Task<ActionResult<ChargeDto>> GetChargeEntity(Guid id)
     {
         var chargeDto = await chargeService.GetChargeEntityAsync(id);
-        if (chargeDto == null)
-        {
-            return NotFound();
-        }
-        return Ok(chargeDto);
+        return chargeDto == null ? (ActionResult<ChargeDto>) NotFound() : (ActionResult<ChargeDto>) Ok(chargeDto);
     }
 
     [HttpPut("{id}")]
@@ -35,11 +31,7 @@ public class ChargesController(ChargeService chargeService) : ControllerBase
         }
 
         var result = await chargeService.UpdateChargeEntityAsync(chargeDto);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 
     [HttpPost]
@@ -53,10 +45,6 @@ public class ChargesController(ChargeService chargeService) : ControllerBase
     public async Task<IActionResult> DeleteChargeEntity(Guid id)
     {
         var result = await chargeService.DeleteChargeEntityAsync(id);
-        if (!result)
-        {
-            return NotFound();
-        }
-        return NoContent();
+        return !result ? NotFound() : NoContent();
     }
 }

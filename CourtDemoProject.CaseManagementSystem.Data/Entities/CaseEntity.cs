@@ -10,18 +10,18 @@ public class CaseEntity
 
     public CaseTypeEnum CaseType { get; set; }
 
-    public ICollection<CaseParticipantEntity> CaseParticipants { get; set; } = new List<CaseParticipantEntity>();
+    public List<CaseParticipantEntity> CaseParticipants { get; set; } = [];
 
-    public ICollection<ChargeEntity> Charges { get; set; } = new List<ChargeEntity>();
+    public List<ChargeEntity> Charges { get; set; } = [];
 
     public DateOnly DateOfOffense { get; set; }
 
-    public ICollection<CaseDetailEntity> CaseDetails { get; set; } = new List<CaseDetailEntity>();
+    public List<CaseDetailEntity> CaseDetails { get; set; } = [];
 
     public VerdictEnum Verdict { get; set; }
     public PleadEnum Plead { get; set; }
 
-    public ICollection<DateTime> CourtDates { get; set; } = new List<DateTime>();
+    public List<DateTime> CourtDates { get; set; } = [];
 
     public CaseStatusEnum CaseStatus { get; set; }
 
@@ -30,7 +30,7 @@ public class CaseEntity
         return new CaseDto(CaseId, CourtName, CaseType, ConvertCaseParticipantEntitiesToDto, ConvertChargeEntitiesToDto, DateOfOffense, ConvertCaseDetailEntitiesToDto, Verdict, Plead, CourtDates, CaseStatus);
     }
 
-    private ICollection<CaseParticipantDto> ConvertCaseParticipantEntitiesToDto => CaseParticipants.Select(x => x.ToDto()).ToList();
-    private ICollection<ChargeDto> ConvertChargeEntitiesToDto => Charges.Select(x => x.ToDto()).ToList();
-    private ICollection<CaseDetailDto> ConvertCaseDetailEntitiesToDto => CaseDetails.Select(x => x.ToDto()).ToList();
+    private List<CaseParticipantDto> ConvertCaseParticipantEntitiesToDto => CaseParticipants.Select(x => x.ToDto()).ToList();
+    private List<ChargeDto> ConvertChargeEntitiesToDto => Charges.Select(x => x.ToDto()).ToList();
+    private List<CaseDetailDto> ConvertCaseDetailEntitiesToDto => CaseDetails.Select(x => x.ToDto()).ToList();
 }

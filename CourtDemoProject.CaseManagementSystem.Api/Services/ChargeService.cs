@@ -22,19 +22,29 @@ public class ChargeService(CaseManagementSystemDbContext context)
     {
         var entity = chargeDto.ToEntity();
 
-        context.Charges.Add(entity);
-        await context.SaveChangesAsync();
+        _ = context.Charges.Add(entity);
+        _ = await context.SaveChangesAsync();
 
         return entity.ToDto();
     }
 
     public async Task<bool> UpdateChargeEntityAsync(ChargeDto chargeDto)
     {
-        var entity = chargeDto.ToEntity();
-        context.Entry(entity).State = EntityState.Modified;
+        var entity = await context.Charges.FindAsync(chargeDto.ChargeId);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        // Update properties
+        entity.ChargeName = chargeDto.ChargeName;
+        entity.ChargeCode = chargeDto.ChargeCode;
+        entity.ChargeType = chargeDto.ChargeType;
+        entity.SentenceLengthIndays = chargeDto.SentenceLengthIndays;
+
         try
         {
-            await context.SaveChangesAsync();
+            _ = await context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateConcurrencyException)
@@ -43,6 +53,7 @@ public class ChargeService(CaseManagementSystemDbContext context)
             {
                 return false;
             }
+
             throw;
         }
     }
@@ -56,8 +67,8 @@ public class ChargeService(CaseManagementSystemDbContext context)
             return false;
         }
 
-        context.Charges.Remove(entity);
-        await context.SaveChangesAsync();
+        _ = context.Charges.Remove(entity);
+        _ = await context.SaveChangesAsync();
 
         return true;
     }
