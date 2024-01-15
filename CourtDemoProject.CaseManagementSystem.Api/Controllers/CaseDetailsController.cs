@@ -46,7 +46,7 @@ public class CaseDetailsController(CaseDetailService caseDetailService) : Contro
     {
         try
         {
-            await caseDetailService.DeleteCaseDetailAsync(id);
+            _ = await caseDetailService.DeleteCaseDetailAsync(id);
         }
         catch (InvalidOperationException)
         {

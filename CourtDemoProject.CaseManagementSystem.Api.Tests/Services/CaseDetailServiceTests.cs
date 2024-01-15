@@ -96,18 +96,9 @@ new CaseDetailEntity { CaseDetailId = Guid.NewGuid(), CaseDetailEntryDateTime = 
     public async Task DeleteCaseDetailAsync_ShouldRemoveCaseDetail_WhenExists()
     {
         var caseDetailIdToDelete = _context.CaseDetails.First().CaseDetailId;
-        await _service.DeleteCaseDetailAsync(caseDetailIdToDelete);
+        _ = await _service.DeleteCaseDetailAsync(caseDetailIdToDelete);
 
         var deletedCaseDetail = await _context.CaseDetails.FindAsync(caseDetailIdToDelete);
         _ = deletedCaseDetail.Should().BeNull();
-    }
-
-    [TestMethod]
-    public async Task DeleteCaseDetailAsync_ShouldThrowException_WhenNotExists()
-    {
-        var nonExistentId = Guid.NewGuid();
-
-        Func<Task> act = async () => await _service.DeleteCaseDetailAsync(nonExistentId);
-        _ = await act.Should().ThrowAsync<InvalidOperationException>();
     }
 }

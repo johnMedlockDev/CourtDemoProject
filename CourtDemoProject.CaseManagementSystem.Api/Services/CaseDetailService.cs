@@ -59,11 +59,17 @@ public class CaseDetailService(CaseManagementSystemDbContext context)
         }
     }
 
-    public async Task DeleteCaseDetailAsync(Guid id)
+    public async Task<bool> DeleteCaseDetailAsync(Guid id)
     {
-        var caseDetail = await context.CaseDetails.FindAsync(id) ?? throw new InvalidOperationException("Case detail not found");
-        _ = context.CaseDetails.Remove(caseDetail);
+        var entity = await context.CaseDetails.FindAsync(id);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        _ = context.CaseDetails.Remove(entity);
         _ = await context.SaveChangesAsync();
+        return true;
     }
 
     public bool CaseDetailExists(Guid id)
