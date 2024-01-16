@@ -1,11 +1,13 @@
 version: "3.8"
 services:
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CaseManagementSystem;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=true;
+      ASPNETCORE_ENVIRONMENT: Development
+      CONNECTION_STRING: Server=sqlserver;Database=CaseManagementSystem;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=true;
     depends_on:
       - sqlserver
     ports:

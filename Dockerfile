@@ -1,10 +1,8 @@
 # Base stage with the ASP.NET runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
-# Switch to root user to install packages
+# Switch to root user to install packages and set file permissions
 USER root
-
-# Install ICU libraries
 RUN apt-get update && apt-get install -y libicu-dev
 
 # Switch back to the 'app' user for security reasons
@@ -18,6 +16,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
 COPY ["CourtDemoProject.CaseManagementSystem.Api/CourtDemoProject.CaseManagementSystem.Api.csproj", "CourtDemoProject.CaseManagementSystem.Api/"]
 RUN dotnet restore "./CourtDemoProject.CaseManagementSystem.Api/./CourtDemoProject.CaseManagementSystem.Api.csproj"
 COPY . .
@@ -33,7 +32,6 @@ RUN dotnet publish "./CourtDemoProject.CaseManagementSystem.Api.csproj" -c $BUIL
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-# Copy a script to run migrations and then start the app
-COPY ./entrypoint.sh .
-RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+
+# Combine the execution of the migration script and the application startup
+ENTRYPOINT ["dotnet", "CourtDemoProject.CaseManagementSystem.Api.dll"]
