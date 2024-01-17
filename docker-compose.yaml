@@ -1,10 +1,15 @@
-version: "3.8"
+networks:
+  court_net:
+
+volumes:
+  sql_data:
+
 services:
 
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: CourtDemoProject.CaseManagementSystem.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       CONNECTION_STRING: Server=sqlserver;Database=CaseManagementSystem;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=true;
@@ -13,6 +18,8 @@ services:
     ports:
       - "8080:8080"
       - "8081:8081"
+    networks:
+        court_net:
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -20,9 +27,23 @@ services:
       SA_PASSWORD: yourStrong(!)Password
       ACCEPT_EULA: Y
     ports:
-      - "1433"
+      - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
+    networks:
+        court_net:
 
-volumes:
-  sql_data:
+  ui:
+    build:
+      context: .
+      dockerfile: CourtDemoProject.CaseManagementSystem.Ui/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      - sqlserver
+      - api
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+        court_net:

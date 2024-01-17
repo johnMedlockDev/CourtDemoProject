@@ -19,6 +19,14 @@ builder.Services.AddScoped<ChargeService>();
 
 var app = builder.Build();
 
+// Ensure the database is created
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<CaseManagementSystemDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
