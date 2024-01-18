@@ -36,7 +36,7 @@ public class CaseServiceTests
                 CourtDates = [DateTime.Now.AddDays(-1), DateTime.Now],
                 CourtName = "Some District Court",
                 DateOfOffense = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)),
-                Plead = PleadEnum.NotGuilty,
+                Plea = PleaEnum.NotGuilty,
                 Verdict = VerdictEnum.InProgress
             }, new CaseEntity
             {
@@ -53,7 +53,7 @@ public class CaseServiceTests
                 CourtDates = [DateTime.Now.AddDays(-1), DateTime.Now],
                 CourtName = "Some District Court",
                 DateOfOffense = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)),
-                Plead = PleadEnum.NotGuilty,
+                Plea = PleaEnum.NotGuilty,
                 Verdict = VerdictEnum.Guilty
             }
 
@@ -97,7 +97,7 @@ public class CaseServiceTests
             DateOnly.FromDateTime(DateTime.Now.AddDays(-3)),
             [],
             VerdictEnum.Guilty,
-            PleadEnum.Guilty,
+            PleaEnum.Guilty,
             [DateTime.Now.AddDays(-1), DateTime.Now],  // Initialize with List<DateTime>
             CaseStatusEnum.InProgress
         );
@@ -122,7 +122,7 @@ public class CaseServiceTests
             DateOnly.FromDateTime(DateTime.Now.AddDays(-3)),
             [],
             VerdictEnum.Guilty,
-            PleadEnum.Guilty,
+            PleaEnum.Guilty,
             [],
             CaseStatusEnum.Closed
         );

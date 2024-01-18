@@ -19,7 +19,7 @@ public class CaseEntity
     public List<CaseDetailEntity> CaseDetails { get; set; } = [];
 
     public VerdictEnum Verdict { get; set; }
-    public PleadEnum Plead { get; set; }
+    public PleaEnum Plea { get; set; }
 
     public List<DateTime> CourtDates { get; set; } = [];
 
@@ -27,7 +27,7 @@ public class CaseEntity
 
     public CaseDto ToDto()
     {
-        return new CaseDto(CaseId, CourtName, CaseType, ConvertCaseParticipantEntitiesToDto, ConvertChargeEntitiesToDto, DateOfOffense, ConvertCaseDetailEntitiesToDto, Verdict, Plead, CourtDates, CaseStatus);
+        return new CaseDto(CaseId, CourtName, CaseType, ConvertCaseParticipantEntitiesToDto, ConvertChargeEntitiesToDto, DateOfOffense, ConvertCaseDetailEntitiesToDto, Verdict, Plea, CourtDates, CaseStatus);
     }
 
     private List<CaseParticipantDto> ConvertCaseParticipantEntitiesToDto => CaseParticipants.Select(x => x.ToDto()).ToList();

@@ -2,12 +2,12 @@
 using CourtDemoProject.CaseManagementSystem.Data.Enums;
 
 namespace CourtDemoProject.CaseManagementSystem.Data.Dtos;
-public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, List<CaseParticipantDto> CaseParticipants, List<ChargeDto> Charges, DateOnly DateOfOffense, List<CaseDetailDto> CaseDetails, VerdictEnum Verdict, PleadEnum Plead, List<DateTime> CourtDates, CaseStatusEnum CaseStatus)
+public record CaseDto(string CaseId, string CourtName, CaseTypeEnum CaseType, List<CaseParticipantDto> CaseParticipants, List<ChargeDto> Charges, DateOnly DateOfOffense, List<CaseDetailDto> CaseDetails, VerdictEnum Verdict, PleaEnum Plea, List<DateTime> CourtDates, CaseStatusEnum CaseStatus)
 {
     public CaseEntity ToEntity()
     {
 
-        return new CaseEntity { CaseId = CaseId, CaseType = CaseType, CourtName = CourtName, CaseStatus = CaseStatus, Verdict = Verdict, Plead = Plead, CourtDates = CourtDates, DateOfOffense = DateOfOffense, CaseParticipants = ConvertCaseParticipantDtoToEntities, CaseDetails = ConvertCaseDetailDtoToEntities, Charges = ConvertChargeDtoToEntities };
+        return new CaseEntity { CaseId = CaseId, CaseType = CaseType, CourtName = CourtName, CaseStatus = CaseStatus, Verdict = Verdict, Plea = Plea, CourtDates = CourtDates, DateOfOffense = DateOfOffense, CaseParticipants = ConvertCaseParticipantDtoToEntities, CaseDetails = ConvertCaseDetailDtoToEntities, Charges = ConvertChargeDtoToEntities };
     }
 
     private List<CaseParticipantEntity> ConvertCaseParticipantDtoToEntities

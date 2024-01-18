@@ -5,9 +5,10 @@
     <!--Command to run on project clean-->
     <CleanCommand>
     </CleanCommand>
-    <StartupCommand>set PORT=3000 &amp; npm run build</StartupCommand>
+    <StartupCommand>set PORT=80 &amp; npm run build</StartupCommand>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="components\" />
     <Folder Include="pages\api\" />
     <Folder Include="public\" />
   </ItemGroup>

@@ -44,7 +44,7 @@ public class CaseService(CaseManagementSystemDbContext context)
         entity.DateOfOffense = caseDto.DateOfOffense;
         entity.CaseDetails = caseDto.CaseDetails.Select(e => e.ToEntity()).ToList();
         entity.Verdict = caseDto.Verdict;
-        entity.Plead = caseDto.Plead;
+        entity.Plea = caseDto.Plea;
         entity.CourtDates = caseDto.CourtDates;
         entity.CaseStatus = caseDto.CaseStatus;
 
