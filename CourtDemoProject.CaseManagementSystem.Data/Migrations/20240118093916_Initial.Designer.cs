@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourtDemoProject.CaseManagementSystem.Data.Migrations
 {
     [DbContext(typeof(CaseManagementSystemDbContext))]
-    [Migration("20240114053352_Initial")]
+    [Migration("20240118093916_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -81,7 +81,7 @@ namespace CourtDemoProject.CaseManagementSystem.Data.Migrations
                     b.Property<DateOnly>("DateOfOffense")
                         .HasColumnType("date");
 
-                    b.Property<int>("Plead")
+                    b.Property<int>("Plea")
                         .HasColumnType("int");
 
                     b.Property<int>("Verdict")

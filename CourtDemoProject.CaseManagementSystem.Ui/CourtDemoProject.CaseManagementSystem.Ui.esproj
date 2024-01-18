@@ -9,7 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="components\" />
-    <Folder Include="pages\api\" />
     <Folder Include="public\" />
   </ItemGroup>
 </Project>

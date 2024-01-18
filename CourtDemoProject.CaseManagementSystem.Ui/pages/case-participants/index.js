@@ -1,11 +1,25 @@
+import styles from '../../styles/pages/case-participants/Participants.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const CaseParticipantsPage = ({ caseParticipants }) => {
+	const router = useRouter()
+
+	const handleDelete = async (caseId) => {
+		try {
+			await axios.delete(`http://api:8080/v1/CaseParticipants/${caseId}`)
+			router.replace(router.asPath) // Refresh the page to update the list
+		} catch (error) {
+			console.error('Error deleting case:', error)
+		}
+	}
+
 	return (
 		<div>
 			<h1>Case Participants</h1>
+			<Link href="/case-participants/create"><a>Create New Case Participant</a></Link>
 			<ul>
 				{caseParticipants.map((participant) => (
 					<li key={participant.caseParticipantEntityId}>
@@ -15,6 +29,7 @@ const CaseParticipantsPage = ({ caseParticipants }) => {
 								<p>Type: {participant.caseParticipantType}</p>
 							</a>
 						</Link>
+						<button onClick={() => handleDelete(participant.caseParticipantEntityId)}>Delete</button>
 					</li>
 				))}
 			</ul>

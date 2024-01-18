@@ -1,7 +1,8 @@
+import styles from '../../styles/pages/case-participants/Participant.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-const CaseParticipantDetailPage = ({ caseParticipant }) => {
+const CaseParticipantPage = ({ caseParticipant }) => {
 	return (
 		<div>
 			<h1>Case Participant Detail</h1>
@@ -37,7 +38,7 @@ export const getServerSideProps = async (context) => {
 	}
 }
 
-CaseParticipantDetailPage.propTypes = {
+CaseParticipantPage.propTypes = {
 	caseParticipant: PropTypes.shape({
 		caseParticipantEntityId: PropTypes.string.isRequired,
 		caseParticipantType: PropTypes.number.isRequired,
@@ -47,4 +48,4 @@ CaseParticipantDetailPage.propTypes = {
 	})
 }
 
-export default CaseParticipantDetailPage
+export default CaseParticipantPage

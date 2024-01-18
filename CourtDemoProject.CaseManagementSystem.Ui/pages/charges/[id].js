@@ -1,7 +1,8 @@
+import styles from '../../styles/pages/charges/Charge.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-const ChargeDetailPage = ({ charge }) => {
+const ChargePage = ({ charge }) => {
 	return (
 		<div>
 			<h1>Charge Detail</h1>
@@ -41,7 +42,7 @@ export const getServerSideProps = async (context) => {
 	}
 }
 
-ChargeDetailPage.propTypes = {
+ChargePage.propTypes = {
 	charge: PropTypes.shape({
 		chargeId: PropTypes.string.isRequired,
 		chargeName: PropTypes.string.isRequired,
@@ -53,4 +54,4 @@ ChargeDetailPage.propTypes = {
 	})
 }
 
-export default ChargeDetailPage
+export default ChargePage

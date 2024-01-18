@@ -78,7 +78,7 @@ namespace CourtDemoProject.CaseManagementSystem.Data.Migrations
                     b.Property<DateOnly>("DateOfOffense")
                         .HasColumnType("date");
 
-                    b.Property<int>("Plead")
+                    b.Property<int>("Plea")
                         .HasColumnType("int");
 
                     b.Property<int>("Verdict")

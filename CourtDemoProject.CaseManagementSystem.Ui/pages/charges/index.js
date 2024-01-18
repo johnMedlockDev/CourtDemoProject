@@ -1,11 +1,25 @@
+import styles from '../../styles/pages/charges/Charges.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const ChargesPage = ({ charges }) => {
+	const router = useRouter()
+
+	const handleDelete = async (caseId) => {
+		try {
+			await axios.delete(`http://api:8080/v1/Charges/${caseId}`)
+			router.replace(router.asPath) // Refresh the page to update the list
+		} catch (error) {
+			console.error('Error deleting case:', error)
+		}
+	}
+
 	return (
 		<div>
 			<h1>Charges</h1>
+			<Link href="/charges/create"><a>Create New Charge</a></Link>
 			<ul>
 				{charges.map((charge) => (
 					<li key={charge.chargeId}>
@@ -15,6 +29,7 @@ const ChargesPage = ({ charges }) => {
 								<p>Charge Code: {charge.chargeCode}</p>
 							</a>
 						</Link>
+						<button onClick={() => handleDelete(charge.chargeId)}>Delete</button>
 					</li>
 				))}
 			</ul>

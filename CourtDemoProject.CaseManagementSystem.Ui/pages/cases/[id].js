@@ -1,7 +1,8 @@
+import styles from '../../styles/pages/cases/Case.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-const CaseDetailPage = ({ caseItem }) => {
+const CasePage = ({ caseItem }) => {
 	return (
 		<div>
 			<h1>Case Detail</h1>
@@ -34,7 +35,7 @@ export const getServerSideProps = async (context) => {
 	}
 }
 
-CaseDetailPage.propTypes = {
+CasePage.propTypes = {
 	caseItem: PropTypes.shape({
 		caseId: PropTypes.string.isRequired,
 		courtName: PropTypes.string,
@@ -43,4 +44,4 @@ CaseDetailPage.propTypes = {
 	})
 }
 
-export default CaseDetailPage
+export default CasePage

@@ -1,3 +1,4 @@
+import styles from '../../styles/pages/case-details/Detail.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
