@@ -3,14 +3,22 @@
 ## Overview:
 
 CourtDemoProject is a comprehensive case management system designed to streamline the operations of court cases. 
+
 It facilitates the management of case details, participants, charges, and more, offering a user-friendly interface for efficient case handling.
 
 ### Features:
 
-Case Management: Organize and access information about various court cases.
-Participant Tracking: Keep track of individuals involved in cases, including their roles and details.
-Charge Documentation: Record and manage charges associated with cases.
-Case Details: Store and retrieve detailed information about each case, including dates, descriptions, and related documents.
+Case Management: 
+- Organize and access information about various court cases.
+
+Participant Tracking: 
+- Keep track of individuals involved in cases, including their roles and details.
+
+Charge Documentation: 
+- Record and manage charges associated with cases.
+
+Case Details: 
+- Store and retrieve detailed information about each case, including dates, descriptions, and related documents.
 
 ### Usage:
 
