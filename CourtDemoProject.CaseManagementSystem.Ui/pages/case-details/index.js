@@ -1,8 +1,9 @@
-import styles from '../../styles/pages/case-details/Details.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Container, Typography, List, ListItem, ListItemText, Button, IconButton, Link as MuiLink } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import NextLink from 'next/link'
 
 const CaseDetailsPage = ({ caseDetails }) => {
 	const router = useRouter()
@@ -17,25 +18,46 @@ const CaseDetailsPage = ({ caseDetails }) => {
 	}
 
 	return (
-		<div>
-			<h1>Case Details</h1>
-			<Link href="/case-details/create"><a>Create New Case Detail</a></Link>
-			<ul>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Case Details</Typography>
+			<NextLink href="/case-details/create" passHref>
+				<Button variant="contained" color="primary">Create New Case Detail</Button>
+			</NextLink>
+			<List>
 				{caseDetails.map((detail) => (
-					<li key={detail.caseDetailId}>
-						<Link href={`/case-details/${detail.caseDetailId}`}>
-							<a>
-								<p>Date: {new Date(detail.caseDetailEntryDateTime).toLocaleDateString()}</p>
-								<p>Description: {detail.description}</p>
-								<p>Docket Detail: {detail.docketDetail}</p>
-								{detail.documentUri && <p>Document: <a href={detail.documentUri}>{detail.documentUri}</a></p>}
-							</a>
-						</Link>
-						<button onClick={() => handleDelete(detail.caseDetailId)}>Delete</button>
-					</li>
+					<ListItem key={detail.caseDetailId} divider>
+						<ListItemText
+							primary={`Date: ${new Date(detail.caseDetailEntryDateTime).toLocaleDateString()}`}
+							secondary={
+								<>
+									<Typography component="span" variant="body2">
+                                        Description: {detail.description}
+									</Typography>
+									<br />
+									<Typography component="span" variant="body2">
+                                        Docket Detail: {detail.docketDetail}
+									</Typography>
+									<br />
+									{detail.documentUri && (
+										<Typography component="span" variant="body2">
+                                            Document: <MuiLink href={detail.documentUri}>{detail.documentUri}</MuiLink>
+										</Typography>
+									)}
+								</>
+							}
+						/>
+						<NextLink href={`/case-details/${detail.caseDetailId}`} passHref>
+							<MuiLink>
+								<Button color="primary">View</Button>
+							</MuiLink>
+						</NextLink>
+						<IconButton onClick={() => handleDelete(detail.caseDetailId)} color="error">
+							<DeleteIcon />
+						</IconButton>
+					</ListItem>
 				))}
-			</ul>
-		</div>
+			</List>
+		</Container>
 	)
 }
 

@@ -1,8 +1,9 @@
-import styles from '../../styles/pages/case-participants/Participants.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Container, Typography, List, ListItem, ListItemText, Button, IconButton, Link as MuiLink } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import NextLink from 'next/link'
 
 const CaseParticipantsPage = ({ caseParticipants }) => {
 	const router = useRouter()
@@ -17,23 +18,30 @@ const CaseParticipantsPage = ({ caseParticipants }) => {
 	}
 
 	return (
-		<div>
-			<h1>Case Participants</h1>
-			<Link href="/case-participants/create"><a>Create New Case Participant</a></Link>
-			<ul>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Case Participants</Typography>
+			<NextLink href="/case-participants/create" passHref>
+				<Button variant="contained" color="primary">Create New Case Participant</Button>
+			</NextLink>
+			<List>
 				{caseParticipants.map((participant) => (
-					<li key={participant.caseParticipantEntityId}>
-						<Link href={`/case-participants/${participant.caseParticipantEntityId}`}>
-							<a>
-								<p>Name: {participant.caseParticipantFirstName} {participant.caseParticipantMiddleName} {participant.caseParticipantLastName}</p>
-								<p>Type: {participant.caseParticipantType}</p>
-							</a>
-						</Link>
-						<button onClick={() => handleDelete(participant.caseParticipantEntityId)}>Delete</button>
-					</li>
+					<ListItem key={participant.caseParticipantEntityId} divider>
+						<ListItemText
+							primary={`${participant.caseParticipantFirstName} ${participant.caseParticipantMiddleName} ${participant.caseParticipantLastName}`}
+							secondary={`Type: ${participant.caseParticipantType}`}
+						/>
+						<NextLink href={`/case-participants/${participant.caseParticipantEntityId}`} passHref>
+							<MuiLink>
+								<Button color="primary">View</Button>
+							</MuiLink>
+						</NextLink>
+						<IconButton onClick={() => handleDelete(participant.caseParticipantEntityId)} color="error">
+							<DeleteIcon />
+						</IconButton>
+					</ListItem>
 				))}
-			</ul>
-		</div>
+			</List>
+		</Container>
 	)
 }
 

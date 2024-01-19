@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import styles from '../../styles/pages/case-details/CreateDetail.module.scss'
+import { Container, Typography, TextField, Button, Box } from '@mui/material'
 
 const CreateCaseDetailPage = () => {
 	const [detailData, setDetailData] = useState({
@@ -27,45 +27,48 @@ const CreateCaseDetailPage = () => {
 	}
 
 	return (
-		<div className={styles.createDetail}>
-			<h1>Create New Case Detail</h1>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 4 }}>Create New Case Detail</Typography>
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="description">Description:</label>
-					<input
-						type="text"
-						id="description"
+				<Box sx={{ mb: 2 }}>
+					<TextField
+						label="Description"
+						variant="outlined"
+						fullWidth
 						name="description"
 						value={detailData.description}
 						onChange={handleChange}
 						required
 					/>
-				</div>
-				<div>
-					<label htmlFor="docketDetail">Docket Detail:</label>
-					<input
-						type="text"
-						id="docketDetail"
+				</Box>
+				<Box sx={{ mb: 2 }}>
+					<TextField
+						label="Docket Detail"
+						variant="outlined"
+						fullWidth
 						name="docketDetail"
 						value={detailData.docketDetail}
 						onChange={handleChange}
 						required
 					/>
-				</div>
-				<div>
-					<label htmlFor="documentUri">Document URI:</label>
-					<input
-						type="url"
-						id="documentUri"
+				</Box>
+				<Box sx={{ mb: 2 }}>
+					<TextField
+						label="Document URI"
+						variant="outlined"
+						fullWidth
 						name="documentUri"
 						value={detailData.documentUri}
 						onChange={handleChange}
+						type="url"
 					/>
-				</div>
+				</Box>
 				{/* Add other input fields as needed */}
-				<button type="submit">Create Detail</button>
+				<Button variant="contained" color="primary" type="submit">
+                    Create Detail
+				</Button>
 			</form>
-		</div>
+		</Container>
 	)
 }
 

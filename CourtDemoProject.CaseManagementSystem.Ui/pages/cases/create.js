@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import styles from '../../styles/pages/cases/CreateCase.module.scss'
+import { Container, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography } from '@mui/material'
 
 const CreateCasePage = () => {
 	const [caseData, setCaseData] = useState({
 		courtName: '',
-		caseType: '' // You might want to use a select dropdown for case types
-		// Add other fields as needed
+		caseType: '' // Use select dropdown for case types
 	})
 	const router = useRouter()
 
@@ -26,40 +25,43 @@ const CreateCasePage = () => {
 	}
 
 	return (
-		<div className={styles.createCase}>
-			<h1>Create New Case</h1>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Create New Case</Typography>
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="courtName">Court Name:</label>
-					<input
-						type="text"
-						id="courtName"
-						name="courtName"
-						value={caseData.courtName}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-				<div>
-					<label htmlFor="caseType">Case Type:</label>
-					<select
+				<TextField
+					label="Court Name"
+					id="courtName"
+					name="courtName"
+					value={caseData.courtName}
+					onChange={handleChange}
+					fullWidth
+					margin="normal"
+					required
+				/>
+				<FormControl fullWidth margin="normal">
+					<InputLabel id="caseType-label">Case Type</InputLabel>
+					<Select
+						labelId="caseType-label"
 						id="caseType"
 						name="caseType"
 						value={caseData.caseType}
 						onChange={handleChange}
+						label="Case Type"
 						required
 					>
+						<MenuItem value=""><em>None</em></MenuItem>
 						{/* Populate the options dynamically based on your case types */}
-						<option value="">Select Case Type</option>
-						<option value="type1">Type 1</option>
-						<option value="type2">Type 2</option>
+						<MenuItem value="type1">Type 1</MenuItem>
+						<MenuItem value="type2">Type 2</MenuItem>
 						{/* ... other case types ... */}
-					</select>
-				</div>
+					</Select>
+				</FormControl>
 				{/* Add other input fields as needed */}
-				<button type="submit">Create Case</button>
+				<Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                    Create Case
+				</Button>
 			</form>
-		</div>
+		</Container>
 	)
 }
 

@@ -2,16 +2,21 @@
 	"name": "court-demo-project.case-management-system.ui",
 	"version": "0.0.0",
 	"description": "CourtDemoProject.CaseManagementSystem.Ui",
-	"main": "server.js",
+	"main": "index.js",
 	"author": {
 		"name": "John Medlock"
 	},
 	"scripts": {
 		"dev": "next dev -p 80",
 		"build": "next build",
-		"start": "next start -p 80"
+		"start": "next start -p 80",
+		"lint": "eslint --fix ."
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.15.5",
+		"@mui/material": "^5.15.5",
 		"axios": "^1.6.5",
 		"next": "^14.0.4",
 		"prop-types": "^15.8.1",
@@ -19,6 +24,7 @@
 		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
+		"@next/eslint-plugin-next": "^14.1.0",
 		"eslint": "^8.56.0",
 		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-import": "^2.29.1",

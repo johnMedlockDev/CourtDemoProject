@@ -1,32 +1,33 @@
-import Link from 'next/link'
-import styles from '../styles/components/Navbar.module.scss'
+import NextLink from 'next/link'
+import { AppBar, Toolbar, Button, Typography, Box } from '@mui/material'
 
 const Navbar = () => {
 	return (
-		<nav className={styles.navbar}>
-			<ul className={styles.navList}>
-				<li className={styles.navItem}>
-					<Link href="/case-details">
-						<a className={styles.navLink}>Case Details</a>
-					</Link>
-				</li>
-				<li className={styles.navItem}>
-					<Link href="/charges">
-						<a className={styles.navLink}>Charges</a>
-					</Link>
-				</li>
-				<li className={styles.navItem}>
-					<Link href="/case-participants">
-						<a className={styles.navLink}>Case Participants</a>
-					</Link>
-				</li>
-				<li className={styles.navItem}>
-					<Link href="/cases">
-						<a className={styles.navLink}>Cases</a>
-					</Link>
-				</li>
-			</ul>
-		</nav>
+		<AppBar position="static" sx={{ marginBottom: 3, padding: 0 }}>
+			<Toolbar>
+				<Box sx={{ flexGrow: 1 }} />
+				<NextLink href="/case-details" passHref>
+					<Button color="inherit">
+						<Typography variant="button" sx={{ color: 'white', textDecoration: 'none' }}>Case Details</Typography>
+					</Button>
+				</NextLink>
+				<NextLink href="/charges" passHref>
+					<Button color="inherit">
+						<Typography variant="button" sx={{ color: 'white', textDecoration: 'none' }}>Charges</Typography>
+					</Button>
+				</NextLink>
+				<NextLink href="/case-participants" passHref>
+					<Button color="inherit">
+						<Typography variant="button" sx={{ color: 'white', textDecoration: 'none' }}>Case Participants</Typography>
+					</Button>
+				</NextLink>
+				<NextLink href="/cases" passHref>
+					<Button color="inherit">
+						<Typography variant="button" sx={{ color: 'white', textDecoration: 'none' }}>Cases</Typography>
+					</Button>
+				</NextLink>
+			</Toolbar>
+		</AppBar>
 	)
 }
 

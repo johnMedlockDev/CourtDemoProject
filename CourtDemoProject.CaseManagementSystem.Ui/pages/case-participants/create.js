@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import styles from '../../styles/pages/case-participants/CreateParticipant.module.scss'
+import { Container, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography } from '@mui/material'
 
 const CreateCaseParticipantPage = () => {
 	const [participantData, setParticipantData] = useState({
@@ -9,7 +9,6 @@ const CreateCaseParticipantPage = () => {
 		caseParticipantLastName: '',
 		caseParticipantMiddleName: '',
 		caseParticipantType: '' // Assuming this is an enum or similar
-		// Add other fields as needed
 	})
 	const router = useRouter()
 
@@ -28,61 +27,58 @@ const CreateCaseParticipantPage = () => {
 	}
 
 	return (
-		<div className={styles.createParticipant}>
-			<h1>Create New Case Participant</h1>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Create New Case Participant</Typography>
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="firstName">First Name:</label>
-					<input
-						type="text"
-						id="firstName"
-						name="caseParticipantFirstName"
-						value={participantData.caseParticipantFirstName}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-				<div>
-					<label htmlFor="lastName">Last Name:</label>
-					<input
-						type="text"
-						id="lastName"
-						name="caseParticipantLastName"
-						value={participantData.caseParticipantLastName}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-				<div>
-					<label htmlFor="middleName">Middle Name:</label>
-					<input
-						type="text"
-						id="middleName"
-						name="caseParticipantMiddleName"
-						value={participantData.caseParticipantMiddleName}
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label htmlFor="participantType">Participant Type:</label>
-					<select
+				<TextField
+					label="First Name"
+					id="firstName"
+					name="caseParticipantFirstName"
+					value={participantData.caseParticipantFirstName}
+					onChange={handleChange}
+					required
+					fullWidth
+					margin="normal"
+				/>
+				<TextField
+					label="Last Name"
+					id="lastName"
+					name="caseParticipantLastName"
+					value={participantData.caseParticipantLastName}
+					onChange={handleChange}
+					required
+					fullWidth
+					margin="normal"
+				/>
+				<TextField
+					label="Middle Name"
+					id="middleName"
+					name="caseParticipantMiddleName"
+					value={participantData.caseParticipantMiddleName}
+					onChange={handleChange}
+					fullWidth
+					margin="normal"
+				/>
+				<FormControl fullWidth margin="normal">
+					<InputLabel id="participantType-label">Participant Type</InputLabel>
+					<Select
+						labelId="participantType-label"
 						id="participantType"
 						name="caseParticipantType"
 						value={participantData.caseParticipantType}
+						label="Participant Type"
 						onChange={handleChange}
 						required
 					>
-						{/* Populate the options dynamically based on your participant types */}
-						<option value="">Select Type</option>
-						<option value="type1">Type 1</option>
-						<option value="type2">Type 2</option>
+						<MenuItem value=""><em>None</em></MenuItem>
+						<MenuItem value="type1">Type 1</MenuItem>
+						<MenuItem value="type2">Type 2</MenuItem>
 						{/* ... other participant types ... */}
-					</select>
-				</div>
-				{/* Add other input fields as needed */}
-				<button type="submit">Create Participant</button>
+					</Select>
+				</FormControl>
+				<Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>Create Participant</Button>
 			</form>
-		</div>
+		</Container>
 	)
 }
 

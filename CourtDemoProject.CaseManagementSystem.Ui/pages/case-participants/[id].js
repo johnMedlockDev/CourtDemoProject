@@ -1,22 +1,64 @@
+import { useState } from 'react'
 import styles from '../../styles/pages/case-participants/Participant.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
 
 const CaseParticipantPage = ({ caseParticipant }) => {
+	const [isEditMode, setIsEditMode] = useState(false)
+	const [participant, setParticipant] = useState(caseParticipant || {})
+
+	const handleChange = (e) => {
+		setParticipant({ ...participant, [e.target.name]: e.target.value })
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		try {
+			await axios.put(
+				`http://api:8080/v1/CaseParticipants/${participant.caseParticipantEntityId}`,
+				participant
+			)
+			alert('Case participant updated successfully!')
+			setIsEditMode(false) // Switch back to view mode after update
+		} catch (error) {
+			console.error('Error updating case participant:', error)
+			alert('Failed to update case participant.')
+		}
+	}
+
 	return (
-		<div>
-			<h1>Case Participant Detail</h1>
-			{caseParticipant
-				? (
-					<div>
-						<p>Name: {caseParticipant.caseParticipantFirstName} {caseParticipant.caseParticipantMiddleName} {caseParticipant.caseParticipantLastName}</p>
-						<p>Type: {caseParticipant.caseParticipantType}</p>
-					</div>
-				)
-				: (
-					<p>Case participant detail not found.</p>
-				)}
-		</div>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 4 }}>Case Participant Detail</Typography>
+			{!isEditMode ? (
+				<Box>
+					{participant ? (
+						<>
+							<Typography>
+                                Name: {participant.caseParticipantFirstName}{' '}
+								{participant.caseParticipantMiddleName}{' '}
+								{participant.caseParticipantLastName}
+							</Typography>
+							<Typography>Type: {participant.caseParticipantType}</Typography>
+							<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
+						</>
+					) : (
+						<Typography>Case participant detail not found.</Typography>
+					)}
+				</Box>
+			) : (
+				<form onSubmit={handleSubmit}>
+					<Grid container spacing={2}>
+						{/* Replace with appropriate TextField fields */}
+						{/* ... */}
+					</Grid>
+					<Box sx={{ mt: 2 }}>
+						<Button variant="contained" color="primary" type="submit">Update</Button>
+						<Button variant="outlined" onClick={() => setIsEditMode(false)} sx={{ ml: 2 }}>Cancel</Button>
+					</Box>
+				</form>
+			)}
+		</Container>
 	)
 }
 

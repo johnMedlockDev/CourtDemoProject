@@ -1,39 +1,52 @@
 import styles from '../../styles/pages/charges/Charges.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Container, Typography, Button, List, ListItem, ListItemText, Link as MuiLink } from '@mui/material'
+import NextLink from 'next/link'
 
 const ChargesPage = ({ charges }) => {
 	const router = useRouter()
 
-	const handleDelete = async (caseId) => {
+	const handleDelete = async (chargeId) => {
 		try {
-			await axios.delete(`http://api:8080/v1/Charges/${caseId}`)
+			await axios.delete(`http://api:8080/v1/Charges/${chargeId}`)
 			router.replace(router.asPath) // Refresh the page to update the list
 		} catch (error) {
-			console.error('Error deleting case:', error)
+			console.error('Error deleting charge:', error)
 		}
 	}
 
 	return (
-		<div>
-			<h1>Charges</h1>
-			<Link href="/charges/create"><a>Create New Charge</a></Link>
-			<ul>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Charges</Typography>
+			<NextLink href="/charges/create" passHref>
+				<Button variant="contained" color="primary" sx={{ mb: 2 }}>
+                    Create New Charge
+				</Button>
+			</NextLink>
+			<List>
 				{charges.map((charge) => (
-					<li key={charge.chargeId}>
-						<Link href={`/charges/${charge.chargeId}`}>
-							<a>
-								<p>Charge Name: {charge.chargeName}</p>
-								<p>Charge Code: {charge.chargeCode}</p>
-							</a>
-						</Link>
-						<button onClick={() => handleDelete(charge.chargeId)}>Delete</button>
-					</li>
+					<ListItem key={charge.chargeId} divider>
+						<ListItemText
+							primary={`Charge Name: ${charge.chargeName}`}
+							secondary={`Charge Code: ${charge.chargeCode}`}
+						/>
+						<NextLink href={`/charges/${charge.chargeId}`} passHref>
+							<MuiLink>View</MuiLink>
+						</NextLink>
+						<Button
+							variant="outlined"
+							color="secondary"
+							onClick={() => handleDelete(charge.chargeId)}
+							sx={{ ml: 2 }}
+						>
+                            Delete
+						</Button>
+					</ListItem>
 				))}
-			</ul>
-		</div>
+			</List>
+		</Container>
 	)
 }
 

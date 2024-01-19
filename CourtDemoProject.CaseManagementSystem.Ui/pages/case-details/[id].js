@@ -1,24 +1,61 @@
+import { useState } from 'react'
 import styles from '../../styles/pages/case-details/Detail.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import Link from 'next/link'
+import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
 
 const CaseDetailPage = ({ caseDetail }) => {
+	const [isEditMode, setIsEditMode] = useState(false)
+	const [detail, setDetail] = useState(caseDetail || {})
+
+	const handleChange = (e) => {
+		setDetail({ ...detail, [e.target.name]: e.target.value })
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		try {
+			await axios.put(
+				`http://api:8080/v1/CaseDetails/${detail.caseDetailId}`,
+				detail
+			)
+			alert('Case detail updated successfully!')
+			setIsEditMode(false) // Switch back to view mode after update
+		} catch (error) {
+			console.error('Error updating case detail:', error)
+			alert('Failed to update case detail.')
+		}
+	}
+
 	return (
-		<div>
-			<h1>Case Detail</h1>
-			{caseDetail
-				? (
-					<div>
-						<p>Date: {new Date(caseDetail.caseDetailEntryDateTime).toLocaleDateString()}</p>
-						<p>Description: {caseDetail.description}</p>
-						<p>Docket Detail: {caseDetail.docketDetail}</p>
-						{caseDetail.documentUri && <p>Document: <a href={caseDetail.documentUri}>{caseDetail.documentUri}</a></p>}
-					</div>
-				)
-				: (
-					<p>Case detail not found.</p>
-				)}
-		</div>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 4 }}>Case Detail</Typography>
+			{!isEditMode ? (
+				<Box>
+					{detail ? (
+						<>
+							<Typography>Date: {new Date(detail.caseDetailEntryDateTime).toLocaleDateString()}</Typography>
+							<Typography>Description: {detail.description}</Typography>
+							<Typography>Docket Detail: {detail.docketDetail}</Typography>
+							{detail.documentUri && <Typography>Document: <a href={detail.documentUri}>{detail.documentUri}</a></Typography>}
+							<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
+						</>
+					) : (
+						<Typography>Case detail not found.</Typography>
+					)}
+				</Box>
+			) : (
+				<form onSubmit={handleSubmit}>
+					{/* Add TextField components for form fields */}
+					{/* ... */}
+					<Box sx={{ mt: 2 }}>
+						<Button variant="contained" color="primary" type="submit">Update</Button>
+						<Button variant="outlined" onClick={() => setIsEditMode(false)} sx={{ ml: 2 }}>Cancel</Button>
+					</Box>
+				</form>
+			)}
+		</Container>
 	)
 }
 

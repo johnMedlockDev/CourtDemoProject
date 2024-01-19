@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import styles from '../../styles/pages/charges/CreateCharge.module.scss'
+import { Container, Typography, TextField, FormControl, Button, Box } from '@mui/material'
 
 const CreateChargePage = () => {
 	const [chargeData, setChargeData] = useState({
@@ -26,35 +26,35 @@ const CreateChargePage = () => {
 	}
 
 	return (
-		<div className={styles.createCharge}>
-			<h1>Create New Charge</h1>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Create New Charge</Typography>
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="chargeName">Charge Name:</label>
-					<input
-						type="text"
+				<FormControl fullWidth margin="normal">
+					<TextField
 						id="chargeName"
 						name="chargeName"
+						label="Charge Name"
 						value={chargeData.chargeName}
 						onChange={handleChange}
 						required
 					/>
-				</div>
-				<div>
-					<label htmlFor="chargeCode">Charge Code:</label>
-					<input
-						type="text"
+				</FormControl>
+				<FormControl fullWidth margin="normal">
+					<TextField
 						id="chargeCode"
 						name="chargeCode"
+						label="Charge Code"
 						value={chargeData.chargeCode}
 						onChange={handleChange}
 						required
 					/>
-				</div>
+				</FormControl>
 				{/* Add other input fields as needed */}
-				<button type="submit">Create Charge</button>
+				<Box sx={{ mt: 2 }}>
+					<Button type="submit" variant="contained" color="primary">Create Charge</Button>
+				</Box>
 			</form>
-		</div>
+		</Container>
 	)
 }
 

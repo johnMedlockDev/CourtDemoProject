@@ -1,8 +1,9 @@
-import styles from '../../styles/pages/cases/Cases.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Container, Typography, List, ListItem, ListItemText, Button, IconButton, Link as MuiLink } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import NextLink from 'next/link'
 
 const CasesPage = ({ cases }) => {
 	const router = useRouter()
@@ -17,23 +18,30 @@ const CasesPage = ({ cases }) => {
 	}
 
 	return (
-		<div>
-			<h1>Cases</h1>
-			<Link href="/cases/create"><a>Create New Case</a></Link>
-			<ul>
+		<Container>
+			<Typography variant="h4" sx={{ mb: 2 }}>Cases</Typography>
+			<NextLink href="/cases/create" passHref>
+				<Button variant="contained" color="primary">Create New Case</Button>
+			</NextLink>
+			<List>
 				{cases.map((caseItem) => (
-					<li key={caseItem.caseId}>
-						<Link href={`/cases/${caseItem.caseId}`}>
-							<a>
-								<p>Court Name: {caseItem.courtName}</p>
-								<p>Case Type: {caseItem.caseType}</p>
-							</a>
-						</Link>
-						<button onClick={() => handleDelete(caseItem.caseId)}>Delete</button>
-					</li>
+					<ListItem key={caseItem.caseId} divider>
+						<ListItemText
+							primary={`Court Name: ${caseItem.courtName}`}
+							secondary={`Case Type: ${caseItem.caseType}`}
+						/>
+						<NextLink href={`/cases/${caseItem.caseId}`} passHref>
+							<MuiLink>
+								<Button color="primary">View</Button>
+							</MuiLink>
+						</NextLink>
+						<IconButton onClick={() => handleDelete(caseItem.caseId)} color="error">
+							<DeleteIcon />
+						</IconButton>
+					</ListItem>
 				))}
-			</ul>
-		</div>
+			</List>
+		</Container>
 	)
 }
 

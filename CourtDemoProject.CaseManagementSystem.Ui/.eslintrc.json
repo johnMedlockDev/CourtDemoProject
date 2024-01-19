@@ -22,7 +22,8 @@
 		"no-tabs": "off",
 		"no-unused-vars": "off",
 		"react/jsx-uses-react": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"multiline-ternary": "off"
 	},
 	"settings": {
 		"react": {
