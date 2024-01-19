@@ -8,12 +8,12 @@ import NextLink from 'next/link'
 const CaseParticipantsPage = ({ caseParticipants }) => {
 	const router = useRouter()
 
-	const handleDelete = async (caseId) => {
+	const handleDelete = async (caseParticipantEntityId) => {
 		try {
-			await axios.delete(`http://api:8080/v1/CaseParticipants/${caseId}`)
+			await axios.delete(`http://api:8080/v1/CaseParticipants/${caseParticipantEntityId}`)
 			router.replace(router.asPath) // Refresh the page to update the list
 		} catch (error) {
-			console.error('Error deleting case:', error)
+			console.error('Error deleting case participant:', error)
 		}
 	}
 

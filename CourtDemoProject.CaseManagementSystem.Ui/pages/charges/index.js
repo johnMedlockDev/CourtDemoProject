@@ -1,8 +1,7 @@
-import styles from '../../styles/pages/charges/Charges.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { Container, Typography, Button, List, ListItem, ListItemText, Link as MuiLink } from '@mui/material'
+import { Container, Typography, List, ListItem, ListItemText, Button, Link as MuiLink } from '@mui/material'
 import NextLink from 'next/link'
 
 const ChargesPage = ({ charges }) => {
@@ -30,7 +29,7 @@ const ChargesPage = ({ charges }) => {
 					<ListItem key={charge.chargeId} divider>
 						<ListItemText
 							primary={`Charge Name: ${charge.chargeName}`}
-							secondary={`Charge Code: ${charge.chargeCode}`}
+							secondary={`Charge Code: ${charge.chargeCode} | Type: ${charge.chargeType} | Judgement: ${charge.judgementType} | Fine: $${charge.fineAmount} | Sentence (days): ${charge.sentenceLengthIndays}`}
 						/>
 						<NextLink href={`/charges/${charge.chargeId}`} passHref>
 							<MuiLink>View</MuiLink>
@@ -64,7 +63,11 @@ ChargesPage.propTypes = {
 		PropTypes.shape({
 			chargeId: PropTypes.string.isRequired,
 			chargeName: PropTypes.string.isRequired,
-			chargeCode: PropTypes.string.isRequired
+			chargeCode: PropTypes.string.isRequired,
+			chargeType: PropTypes.string, // Assuming conversion of enum to string
+			judgementType: PropTypes.string, // Assuming conversion of enum to string
+			fineAmount: PropTypes.number,
+			sentenceLengthIndays: PropTypes.number
 		})
 	).isRequired
 }

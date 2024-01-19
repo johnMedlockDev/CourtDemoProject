@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import styles from '../../styles/pages/cases/Case.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
+import { Container, Typography, Button, TextField, Box, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 
 const CasePage = ({ caseItem }) => {
 	const [isEditMode, setIsEditMode] = useState(false)
@@ -15,10 +14,7 @@ const CasePage = ({ caseItem }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.put(
-				`http://api:8080/v1/Cases/${editedCase.caseId}`,
-				editedCase
-			)
+			await axios.put(`http://api:8080/v1/Cases/${editedCase.caseId}`, editedCase)
 			alert('Case updated successfully!')
 			setIsEditMode(false) // Switch back to view mode after update
 		} catch (error) {
@@ -29,33 +25,53 @@ const CasePage = ({ caseItem }) => {
 
 	return (
 		<Container>
-			<Typography variant="h4" sx={{ mb: 4 }}>Case Detail</Typography>
+			<Typography variant="h4" sx={{ mb: 4 }}>Case</Typography>
 			{!isEditMode ? (
 				<Box>
-					{editedCase ? (
-						<>
-							<Typography>Court Name: {editedCase.courtName}</Typography>
-							<Typography>Case Type: {editedCase.caseType}</Typography>
-							{/* Display other details as needed */}
-							<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
-						</>
-					) : (
-						<Typography>Case detail not found.</Typography>
-					)}
+					<Typography variant="h6">Court Name: {editedCase.courtName}</Typography>
+					<Typography variant="h6">Case Type: {editedCase.caseType}</Typography>
+					{/* Display other case details here */}
+					{/* ... */}
+					<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
 				</Box>
 			) : (
 				<form onSubmit={handleSubmit}>
 					<Grid container spacing={2}>
-						{/* Replace with appropriate TextField fields */}
-						{/* ... */}
-					</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Court Name"
+								name="courtName"
+								value={editedCase.courtName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<FormControl fullWidth>
+								<InputLabel id="caseType-label">Case Type</InputLabel>
+								<Select
+									labelId="caseType-label"
+									id="caseType"
+									name="caseType"
+									value={editedCase.caseType}
+									label="Case Type"
+									onChange={handleChange}
+								>
+									{/* Populate the options dynamically based on CaseTypeEnum */}
+									{/* ... */}
+								</Select>
+							</FormControl>
+						</Grid>
+						{/* Additional fields for DateOfOffense, Verdict, Plea, CaseStatus */ }
+						{/* ... */ }
+					</Grid >
 					<Box sx={{ mt: 2 }}>
 						<Button variant="contained" color="primary" type="submit">Update</Button>
 						<Button variant="outlined" onClick={() => setIsEditMode(false)} sx={{ ml: 2 }}>Cancel</Button>
 					</Box>
-				</form>
+				</form >
 			)}
-		</Container>
+		</Container >
 	)
 }
 

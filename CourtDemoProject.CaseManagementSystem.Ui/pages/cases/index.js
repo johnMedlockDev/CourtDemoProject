@@ -27,8 +27,8 @@ const CasesPage = ({ cases }) => {
 				{cases.map((caseItem) => (
 					<ListItem key={caseItem.caseId} divider>
 						<ListItemText
-							primary={`Court Name: ${caseItem.courtName}`}
-							secondary={`Case Type: ${caseItem.caseType}`}
+							primary={`Court Name: ${caseItem.courtName} | Case ID: ${caseItem.caseId}`}
+							secondary={`Case Type: ${caseItem.caseType} | Date of Offense: ${caseItem.dateOfOffense} | Status: ${caseItem.caseStatus} | Verdict: ${caseItem.verdict} | Plea: ${caseItem.plea}`}
 						/>
 						<NextLink href={`/cases/${caseItem.caseId}`} passHref>
 							<MuiLink>
@@ -47,7 +47,14 @@ const CasesPage = ({ cases }) => {
 
 export const getServerSideProps = async () => {
 	const res = await axios.get('http://api:8080/v1/Cases')
-	const cases = res.data // Adjust this according to the API response
+	const cases = res.data.map(caseItem => ({
+		...caseItem,
+		caseType: caseItem.caseType,
+		caseStatus: caseItem.caseStatus,
+		verdict: caseItem.verdict,
+		plea: caseItem.plea,
+		dateOfOffense: new Date(caseItem.dateOfOffense)
+	}))
 
 	return {
 		props: { cases }
@@ -59,8 +66,11 @@ CasesPage.propTypes = {
 		PropTypes.shape({
 			caseId: PropTypes.string.isRequired,
 			courtName: PropTypes.string,
-			caseType: PropTypes.number.isRequired
-			// Include other properties as required
+			caseType: PropTypes.string,
+			dateOfOffense: PropTypes.string,
+			caseStatus: PropTypes.string,
+			verdict: PropTypes.string,
+			plea: PropTypes.string
 		})
 	).isRequired
 }

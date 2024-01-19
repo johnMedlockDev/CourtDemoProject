@@ -13,7 +13,7 @@ const CaseDetailsPage = ({ caseDetails }) => {
 			await axios.delete(`http://api:8080/v1/CaseDetails/${caseId}`)
 			router.replace(router.asPath) // Refresh the page to update the list
 		} catch (error) {
-			console.error('Error deleting case:', error)
+			console.error('Error deleting case detail:', error)
 		}
 	}
 

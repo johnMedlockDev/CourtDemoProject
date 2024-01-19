@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import styles from '../../styles/pages/charges/Charge.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
+import { Container, Typography, Button, TextField, Box, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 
 const ChargePage = ({ charge }) => {
 	const [isEditMode, setIsEditMode] = useState(false)
@@ -29,34 +28,79 @@ const ChargePage = ({ charge }) => {
 			<Typography variant="h4" sx={{ mb: 4 }}>Charge Detail</Typography>
 			{!isEditMode ? (
 				<Box>
-					{editedCharge ? (
-						<>
-							<Typography>Name: {editedCharge.chargeName}</Typography>
-							<Typography>Code: {editedCharge.chargeCode}</Typography>
-							<Typography>Type: {editedCharge.chargeType}</Typography>
-							<Typography>Judgement Type: {editedCharge.judgementType}</Typography>
-							<Typography>Fine Amount: {editedCharge.fineAmount}</Typography>
-							<Typography>Sentence Length (days): {editedCharge.sentenceLengthIndays}</Typography>
-							<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
-						</>
-					) : (
-						<Typography>Charge detail not found.</Typography>
-					)}
+					<Typography variant="h6">Charge Name: {editedCharge.chargeName}</Typography>
+					<Typography variant="h6">Charge Code: {editedCharge.chargeCode}</Typography>
+					<Typography variant="h6">Charge Type: {editedCharge.chargeType}</Typography>
+					<Typography variant="h6">Fine Amount: {editedCharge.fineAmount}</Typography>
+					<Typography variant="h6">Sentence Length (days): {editedCharge.sentenceLengthIndays}</Typography>
+					<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
 				</Box>
 			) : (
 				<form onSubmit={handleSubmit}>
-					{/* Form fields for editing */}
 					<Grid container spacing={2}>
-						{/* Replace with appropriate TextField fields */}
-						{/* ... */}
-					</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Charge Name"
+								name="chargeName"
+								value={editedCharge.chargeName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Charge Code"
+								name="chargeCode"
+								value={editedCharge.chargeCode}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<FormControl fullWidth>
+								<InputLabel id="chargeType-label">Charge Type</InputLabel>
+								<Select
+									labelId="chargeType-label"
+									id="chargeType"
+									name="chargeType"
+									value={editedCharge.chargeType}
+									label="Charge Type"
+									onChange={handleChange}
+								>
+									{/* Populate the options dynamically based on ChargeTypeEnum */}
+									{/* ... */}
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Fine Amount"
+								name="fineAmount"
+								type="number"
+								value={editedCharge.fineAmount}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Sentence Length (days)"
+								name="sentenceLengthIndays"
+								type="number"
+								value={editedCharge.sentenceLengthIndays}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						{/* Add more fields if required */ }
+					</Grid >
 					<Box sx={{ mt: 2 }}>
 						<Button variant="contained" color="primary" type="submit">Update</Button>
 						<Button variant="outlined" onClick={() => setIsEditMode(false)} sx={{ ml: 2 }}>Cancel</Button>
 					</Box>
-				</form>
+				</form >
 			)}
-		</Container>
+		</Container >
 	)
 }
 

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import styles from '../../styles/pages/case-participants/Participant.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
@@ -15,10 +14,7 @@ const CaseParticipantPage = ({ caseParticipant }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.put(
-				`http://api:8080/v1/CaseParticipants/${participant.caseParticipantEntityId}`,
-				participant
-			)
+			await axios.put(`http://api:8080/v1/CaseParticipants/${participant.caseParticipantEntityId}`, participant)
 			alert('Case participant updated successfully!')
 			setIsEditMode(false) // Switch back to view mode after update
 		} catch (error) {
@@ -34,11 +30,7 @@ const CaseParticipantPage = ({ caseParticipant }) => {
 				<Box>
 					{participant ? (
 						<>
-							<Typography>
-                                Name: {participant.caseParticipantFirstName}{' '}
-								{participant.caseParticipantMiddleName}{' '}
-								{participant.caseParticipantLastName}
-							</Typography>
+							<Typography>Name: {participant.caseParticipantFirstName} {participant.caseParticipantMiddleName} {participant.caseParticipantLastName}</Typography>
 							<Typography>Type: {participant.caseParticipantType}</Typography>
 							<Button variant="contained" color="primary" onClick={() => setIsEditMode(true)} sx={{ mt: 2 }}>Edit</Button>
 						</>
@@ -49,8 +41,34 @@ const CaseParticipantPage = ({ caseParticipant }) => {
 			) : (
 				<form onSubmit={handleSubmit}>
 					<Grid container spacing={2}>
-						{/* Replace with appropriate TextField fields */}
-						{/* ... */}
+						<Grid item xs={12}>
+							<TextField
+								label="First Name"
+								name="caseParticipantFirstName"
+								value={participant.caseParticipantFirstName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Middle Name"
+								name="caseParticipantMiddleName"
+								value={participant.caseParticipantMiddleName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								label="Last Name"
+								name="caseParticipantLastName"
+								value={participant.caseParticipantLastName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Grid>
+						{/* Other fields as required */}
 					</Grid>
 					<Box sx={{ mt: 2 }}>
 						<Button variant="contained" color="primary" type="submit">Update</Button>

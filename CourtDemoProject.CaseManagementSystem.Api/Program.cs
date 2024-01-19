@@ -19,13 +19,20 @@ builder.Services.AddScoped<ChargeService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
-    {
-        _ = builder.WithOrigins("http://ui:80")
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
+    //options.AddPolicy("AllowSpecificOrigin", builder =>
+    //{
+    //    _ = builder.WithOrigins("http://ui:80")
+    //           .AllowAnyHeader()
+    //           .AllowAnyMethod();
+    //});
+    options.AddPolicy("AllowAnyOrigin",
+     builder => builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
 });
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
@@ -44,7 +51,8 @@ if (app.Environment.IsDevelopment())
     _ = app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpecificOrigin");
+//app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAnyOrigin");
 
 app.UseHttpsRedirection();
 

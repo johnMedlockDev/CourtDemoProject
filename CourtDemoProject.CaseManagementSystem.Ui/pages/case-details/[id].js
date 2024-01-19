@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import styles from '../../styles/pages/case-details/Detail.module.scss'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Link from 'next/link'
-import { Container, Typography, Button, TextField, Box, Grid } from '@mui/material'
+import { Container, Typography, Button, TextField, Box } from '@mui/material'
 
 const CaseDetailPage = ({ caseDetail }) => {
 	const [isEditMode, setIsEditMode] = useState(false)
@@ -16,10 +14,7 @@ const CaseDetailPage = ({ caseDetail }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.put(
-				`http://api:8080/v1/CaseDetails/${detail.caseDetailId}`,
-				detail
-			)
+			await axios.put(`http://api:8080/v1/CaseDetails/${detail.caseDetailId}`, detail)
 			alert('Case detail updated successfully!')
 			setIsEditMode(false) // Switch back to view mode after update
 		} catch (error) {
@@ -47,8 +42,32 @@ const CaseDetailPage = ({ caseDetail }) => {
 				</Box>
 			) : (
 				<form onSubmit={handleSubmit}>
-					{/* Add TextField components for form fields */}
-					{/* ... */}
+					<TextField
+						label="Description"
+						name="description"
+						value={detail.description}
+						onChange={handleChange}
+						fullWidth
+						margin="normal"
+					/>
+					<TextField
+						label="Docket Detail"
+						name="docketDetail"
+						value={detail.docketDetail}
+						onChange={handleChange}
+						fullWidth
+						margin="normal"
+					/>
+					<TextField
+						label="Document URI"
+						name="documentUri"
+						value={detail.documentUri}
+						onChange={handleChange}
+						fullWidth
+						margin="normal"
+						type="url"
+					/>
+					{/* Other fields as required */}
 					<Box sx={{ mt: 2 }}>
 						<Button variant="contained" color="primary" type="submit">Update</Button>
 						<Button variant="outlined" onClick={() => setIsEditMode(false)} sx={{ ml: 2 }}>Cancel</Button>
